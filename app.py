@@ -18,9 +18,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'secret_key'
 api = Api(app)
 
-#@app.before_first_request
-#def create_tables():
-#    db.create_all()
 
 
 jwt = JWT(app, authenticate, identity) # JWT creates a new endpoint /auth. when we call /auth temos que enviar um username e um password
@@ -34,10 +31,10 @@ api.add_resource(UserRegister,'/register')
 
 
 #db.init_app(app)
-app.run(port=5000, debug=True)
-
+#app.run(port=5000, debug=True)
 
 
 if __name__ == '__main__': # isso daqui serve para prevenir caso algum file rode um import app ele não rode um app.run. o __main__ é o nome que o python atribui ao arquivo da onde surgiu a execução do run
-    
+    from db import db
+    db.init_app(app)
     app.run(port=5000, debug=True)
