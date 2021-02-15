@@ -1,4 +1,4 @@
-from db import db
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -17,10 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db' #podemos colocar qua
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'secret_key'
 api = Api(app)
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 
 jwt = JWT(app, authenticate, identity) # JWT creates a new endpoint /auth. when we call /auth temos que enviar um username e um password
