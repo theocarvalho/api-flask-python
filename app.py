@@ -7,7 +7,6 @@ from security import authenticate, identity
 from resources.user import UserRegister
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList 
-from db import db
 
 # JWT = Json Web Token
 
