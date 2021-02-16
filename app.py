@@ -1,4 +1,5 @@
-# from db import db
+import os
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -13,7 +14,7 @@ from resources.store import Store, StoreList
 
 # para iniciar virtual env source venv/bin/activate
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db' #podemos colocar qualquer tipo de SQL aqui. poderia ser por exemplo postgres seria apenas mudar isso aqui.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db') #o get pode ter dois parâmetros, de forma que caso o primeiro não existir a variável ele vai tentar a outra opção. podemos colocar qualquer tipo de SQL aqui. poderia ser por exemplo postgres seria apenas mudar isso aqui.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'secret_key'
 api = Api(app)
@@ -29,9 +30,6 @@ api.add_resource(ItemList,'/items')
 api.add_resource(StoreList, '/stores')
 api.add_resource(UserRegister,'/register')
 
-
-#db.init_app(app)
-#app.run(port=5000, debug=True)
 
 
 if __name__ == '__main__': # isso daqui serve para prevenir caso algum file rode um import app ele não rode um app.run. o __main__ é o nome que o python atribui ao arquivo da onde surgiu a execução do run
